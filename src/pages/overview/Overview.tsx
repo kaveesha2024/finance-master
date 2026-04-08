@@ -54,21 +54,21 @@ const Overview: React.FC = () => {
             <CardContent className={"flex flex-col gap-5"}>
               <div
                 className={
-                  "flex h-[40px] w-full items-center justify-start border-b hover:bg-black/10"
+                  "flex h-[40px] w-full items-center justify-start border-b hover:bg-secondary"
                 }
               >
                 Kaveesha
               </div>
               <div
                 className={
-                  "flex h-[40px] w-full items-center justify-start border-b hover:bg-black/10"
+                  "flex h-[40px] w-full items-center justify-start border-b hover:bg-secondary"
                 }
               >
                 Kaveesha
               </div>
               <div
                 className={
-                  "flex h-[40px] w-full items-center justify-start border-b hover:bg-black/10"
+                  "flex h-[40px] w-full items-center justify-start border-b hover:bg-secondary"
                 }
               >
                 Kaveesha
@@ -92,21 +92,21 @@ const Overview: React.FC = () => {
             <CardContent className={"flex flex-col gap-5"}>
               <div
                 className={
-                  "flex h-[40px] w-full items-center justify-start border-b hover:bg-black/10"
+                  "flex h-[40px] w-full items-center justify-start border-b hover:bg-secondary"
                 }
               >
                 Kaveesha
               </div>
               <div
                 className={
-                  "flex h-[40px] w-full items-center justify-start border-b hover:bg-black/10"
+                  "flex h-[40px] w-full items-center justify-start border-b hover:bg-secondary"
                 }
               >
                 Kaveesha
               </div>
               <div
                 className={
-                  "flex h-[40px] w-full items-center justify-start border-b hover:bg-black/10"
+                  "flex h-[40px] w-full items-center justify-start border-b hover:bg-secondary"
                 }
               >
                 Kaveesha
@@ -130,21 +130,21 @@ const Overview: React.FC = () => {
             <CardContent className={"flex flex-col gap-5"}>
               <div
                 className={
-                  "flex h-[40px] w-full items-center justify-start border-b hover:bg-black/10"
+                  "flex h-[40px] w-full items-center justify-start border-b hover:bg-secondary"
                 }
               >
                 Kaveesha
               </div>
               <div
                 className={
-                  "flex h-[40px] w-full items-center justify-start border-b hover:bg-black/10"
+                  "flex h-[40px] w-full items-center justify-start border-b hover:bg-secondary"
                 }
               >
                 Kaveesha
               </div>
               <div
                 className={
-                  "flex h-[40px] w-full items-center justify-start border-b hover:bg-black/10"
+                  "flex h-[40px] w-full items-center justify-start border-b hover:bg-secondary"
                 }
               >
                 Kaveesha
