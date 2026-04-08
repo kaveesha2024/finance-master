@@ -8,7 +8,6 @@ type AccountStore = {
     balance: number
   }
   accounts: Account[]
-  toggleIsCreateNewAccountFormOpen: () => void
   globalHotKey: (event: { key: string }) => void
 }
 
@@ -19,24 +18,20 @@ const useAccountStore = create<AccountStore>((set) => ({
     name: "",
   },
   accounts: [],
-  toggleIsCreateNewAccountFormOpen: () => {
-    set((state) => ({
-      ...state,
-      isCreateNewAccountFormOpen: true,
-    }))
-  },
   globalHotKey: (event) => {
-    if (event.key === "Escape") {
-      set((state) => ({
-        ...state,
-        isCreateNewAccountFormOpen: false,
-      }))
-    }
-    if (event.key === "F9") {
-      set((state) => ({
-        ...state,
-        isCreateNewAccountFormOpen: true,
-      }))
+    switch (event.key) {
+      case "Escape":
+        set((state) => ({
+          ...state,
+          isCreateNewAccountFormOpen: false,
+        }))
+        break
+      case "F9":
+        set((state) => ({
+          ...state,
+          isCreateNewAccountFormOpen: true,
+        }))
+        break
     }
   },
 }))

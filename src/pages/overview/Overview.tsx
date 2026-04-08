@@ -36,16 +36,16 @@ const Overview: React.FC = () => {
               <CardHeader>
                 <CardTitle>HNB</CardTitle>
                 <CardDescription>__</CardDescription>
-                <CardAction
-                  className={
-                    "cursor-pointer text-xs text-primary hover:underline"
-                  }
-                  onClick={() =>
-                    accountStore.toggleIsCreateNewAccountFormOpen()
-                  }
-                >
-                  create new
-                </CardAction>
+                {/*<CardAction*/}
+                {/*  className={*/}
+                {/*    "cursor-pointer text-xs text-primary hover:underline"*/}
+                {/*  }*/}
+                {/*  onClick={() =>*/}
+                {/*    accountStore.toggleIsCreateNewAccountFormOpen()*/}
+                {/*  }*/}
+                {/*>*/}
+                {/*  create new*/}
+                {/*</CardAction>*/}
               </CardHeader>
               <CardContent>
                 <p className={"text-3xl"}>Rs 1500.00</p>
