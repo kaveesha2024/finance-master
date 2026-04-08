@@ -20,7 +20,13 @@ const Overview: React.FC = () => {
             <CardHeader>
               <CardTitle>HNB</CardTitle>
               <CardDescription>__</CardDescription>
-              <CardAction> Action</CardAction>
+              <CardAction
+                className={
+                  "cursor-pointer text-xs text-primary hover:underline"
+                }
+              >
+                create new
+              </CardAction>
             </CardHeader>
             <CardContent>
               <p className={"text-3xl"}>Rs 1500.00</p>
@@ -29,6 +35,124 @@ const Overview: React.FC = () => {
         </div>
       </div>
       {/* Account Section Ends */}
+
+      <div className={"mt-10 grid w-full grid-cols-3 gap-5"}>
+        {/* Transactions Section */}
+        <div>
+          <Header text={"Recent Transactions"} />
+          <Card>
+            <CardHeader>
+              <CardTitle>Recent Transactions</CardTitle>
+              <CardAction
+                className={
+                  "cursor-pointer text-xs text-primary hover:underline"
+                }
+              >
+                see all
+              </CardAction>
+            </CardHeader>
+            <CardContent className={"flex flex-col gap-5"}>
+              <div
+                className={
+                  "flex h-[40px] w-full items-center justify-start border-b hover:bg-black/10"
+                }
+              >
+                Kaveesha
+              </div>
+              <div
+                className={
+                  "flex h-[40px] w-full items-center justify-start border-b hover:bg-black/10"
+                }
+              >
+                Kaveesha
+              </div>
+              <div
+                className={
+                  "flex h-[40px] w-full items-center justify-start border-b hover:bg-black/10"
+                }
+              >
+                Kaveesha
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+        <div>
+          <Header text={"Loans to pay this month"} />
+          <Card>
+            <CardHeader>
+              <CardTitle>Recent Transactions</CardTitle>
+              <CardAction
+                className={
+                  "cursor-pointer text-xs text-primary hover:underline"
+                }
+              >
+                see all
+              </CardAction>
+            </CardHeader>
+            <CardContent className={"flex flex-col gap-5"}>
+              <div
+                className={
+                  "flex h-[40px] w-full items-center justify-start border-b hover:bg-black/10"
+                }
+              >
+                Kaveesha
+              </div>
+              <div
+                className={
+                  "flex h-[40px] w-full items-center justify-start border-b hover:bg-black/10"
+                }
+              >
+                Kaveesha
+              </div>
+              <div
+                className={
+                  "flex h-[40px] w-full items-center justify-start border-b hover:bg-black/10"
+                }
+              >
+                Kaveesha
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+        <div>
+          <Header text={"Lendings"} />
+          <Card>
+            <CardHeader>
+              <CardTitle>Recent Transactions</CardTitle>
+              <CardAction
+                className={
+                  "cursor-pointer text-xs text-primary hover:underline"
+                }
+              >
+                see all
+              </CardAction>
+            </CardHeader>
+            <CardContent className={"flex flex-col gap-5"}>
+              <div
+                className={
+                  "flex h-[40px] w-full items-center justify-start border-b hover:bg-black/10"
+                }
+              >
+                Kaveesha
+              </div>
+              <div
+                className={
+                  "flex h-[40px] w-full items-center justify-start border-b hover:bg-black/10"
+                }
+              >
+                Kaveesha
+              </div>
+              <div
+                className={
+                  "flex h-[40px] w-full items-center justify-start border-b hover:bg-black/10"
+                }
+              >
+                Kaveesha
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
     </div>
   )
 }
