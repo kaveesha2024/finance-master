@@ -19,9 +19,7 @@ createRoot(document.getElementById("root")!).render(
           <SidebarProvider>
             <BrowserRouter>
               <AppSidebar />
-              <main>
-                <AppRoutes />
-              </main>
+              <AppRoutes />
             </BrowserRouter>
           </SidebarProvider>
         </ThemeProvider>
