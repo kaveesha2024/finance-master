@@ -10,6 +10,9 @@ import {
 } from "@/components/ui/card.tsx"
 import useAccountStore from "@/features/accounts/store/account.store.ts"
 import CreateNewAccountForm from "@/features/accounts/components/CreateNewAccountForm.tsx"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert.tsx"
+import { HugeiconsIcon } from "@hugeicons/react"
+import { Tick01Icon } from "@hugeicons/core-free-icons"
 
 const Overview: React.FC = () => {
   const accountStore = useAccountStore()
@@ -19,7 +22,6 @@ const Overview: React.FC = () => {
       window.removeEventListener("keydown", accountStore.globalHotKey)
     }
   }, [])
-  console.log(accountStore.isCreateNewAccountFormOpen)
   return (
     <>
       <div className="m-5 w-full">

@@ -3,6 +3,7 @@ import type { Account } from "@/features/accounts/type/account"
 import type { ChangeEvent } from "react"
 import { addAccount } from "@/features/accounts/services/accountService.ts"
 import { v4 as uuid } from "uuid"
+import { toast } from "sonner"
 
 type AccountStore = {
   isCreateNewAccountFormOpen: boolean
@@ -78,6 +79,10 @@ const useAccountStore = create<AccountStore>((set, get) => ({
           ...state,
           isCreateNewAccountFormOpen: false,
         }))
+        toast.success("Successful", {
+          description: "Your account has been created!",
+          position: "bottom-right",
+        })
       } else {
         set((state) => ({
           ...state,
