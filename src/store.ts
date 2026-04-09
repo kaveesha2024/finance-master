@@ -1,6 +1,6 @@
 // import { configureStore } from "@reduxjs/toolkit"
 // import { persistStore, persistReducer } from "redux-persist"
-// import storage from "redux-persist/lib/storage"
+// import storage from "redux-persist/services/storage"
 // import accountReducer from "@/features/accounts/slice/account.slice.ts"
 // import { combineReducers } from "redux"
 //
