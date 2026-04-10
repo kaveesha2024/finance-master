@@ -11,9 +11,12 @@ import {
 import useAccountStore from "@/features/accounts/store/account.store.ts"
 import CreateNewAccountForm from "@/features/accounts/components/CreateNewAccountForm.tsx"
 import type { Account } from "@/features/accounts/type/account"
+import TransactionForm from "@/features/transaction/components/TransactionForm.tsx"
+import useTransactionStore from "@/features/transaction/store/transaction.store.ts"
 
 const Overview: React.FC = () => {
   const accountStore = useAccountStore()
+  const transactionStore = useTransactionStore()
   useEffect(() => {
     accountStore.getAllAccounts()
     window.addEventListener("keydown", accountStore.globalHotKey)
@@ -172,6 +175,7 @@ const Overview: React.FC = () => {
         </div>
       </div>
       {accountStore.isCreateNewAccountFormOpen && <CreateNewAccountForm />}
+      {transactionStore.transactionMode && <TransactionForm />}
     </>
   )
 }
