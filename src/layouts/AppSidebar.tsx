@@ -19,7 +19,9 @@ import {
 const AppSidebar: React.FC = () => {
   return (
     <Sidebar>
-      <SidebarHeader>Finance Master</SidebarHeader>
+      <SidebarHeader className={"text-2xl font-bold"}>
+        Finance Master
+      </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel>Main</SidebarGroupLabel>
