@@ -1,7 +1,10 @@
 import { create } from "zustand"
 import type { Account } from "@/features/accounts/type/account"
 import type { ChangeEvent } from "react"
-import { addAccount } from "@/features/accounts/services/accountService.ts"
+import {
+  addAccount,
+  getAccounts,
+} from "@/features/accounts/services/accountService.ts"
 import { v4 as uuid } from "uuid"
 import { toast } from "sonner"
 
@@ -19,6 +22,7 @@ type AccountStore = {
   ) => void
   createError: (error?: string) => void
   createNewAccount: () => void
+  getAllAccounts: () => void
 }
 
 const useAccountStore = create<AccountStore>((set, get) => ({
@@ -69,16 +73,17 @@ const useAccountStore = create<AccountStore>((set, get) => ({
     if (get().createNewAccountFormData.name !== "") {
       // todo Check weather the account name is already exists... 🫶🖤
 
-      const res = addAccount({
-        name: get().createNewAccountFormData.name,
+      const response = addAccount({
+        name: get().createNewAccountFormData.name.trim(),
         amount: get().createNewAccountFormData.balance,
         id: uuid(),
       })
-      if (res) {
+      if (response) {
         set((state) => ({
           ...state,
           isCreateNewAccountFormOpen: false,
         }))
+        get().getAllAccounts()
         toast.success("Successful", {
           description: "Your account has been created!",
           position: "bottom-right",
@@ -92,6 +97,13 @@ const useAccountStore = create<AccountStore>((set, get) => ({
     } else {
       get().createError('"Please fill all the information"')
     }
+  },
+  getAllAccounts: () => {
+    const allAccounts = getAccounts()
+    set((state) => ({
+      ...state,
+      accounts: allAccounts,
+    }))
   },
 }))
 

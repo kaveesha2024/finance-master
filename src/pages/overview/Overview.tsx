@@ -10,10 +10,12 @@ import {
 } from "@/components/ui/card.tsx"
 import useAccountStore from "@/features/accounts/store/account.store.ts"
 import CreateNewAccountForm from "@/features/accounts/components/CreateNewAccountForm.tsx"
+import type { Account } from "@/features/accounts/type/account"
 
 const Overview: React.FC = () => {
   const accountStore = useAccountStore()
   useEffect(() => {
+    accountStore.getAllAccounts()
     window.addEventListener("keydown", accountStore.globalHotKey)
     return () => {
       window.removeEventListener("keydown", accountStore.globalHotKey)
@@ -31,18 +33,22 @@ const Overview: React.FC = () => {
             </div>
           </div>
           <div className={"flex gap-5"}>
-            <Card className={"w-[400px]"}>
-              <CardHeader>
-                <CardTitle>HNB</CardTitle>
-                <CardDescription>__</CardDescription>
-                <CardAction className={"text-xs text-primary"}>
-                  press F9
-                </CardAction>
-              </CardHeader>
-              <CardContent>
-                <p className={"text-3xl"}>Rs 1500.00</p>
-              </CardContent>
-            </Card>
+            {accountStore.accounts.map((account: Account, index: number) => (
+              <Card key={index} className={"w-[400px]"}>
+                <CardHeader>
+                  <CardTitle>{account.name}</CardTitle>
+                  <CardDescription>__</CardDescription>
+                  <CardAction className={"text-xs text-primary"}>
+                    press F9
+                  </CardAction>
+                </CardHeader>
+                <CardContent>
+                  <p className={"text-3xl"}>
+                    Rs {Number(account.amount).toFixed(2)}/=
+                  </p>
+                </CardContent>
+              </Card>
+            ))}
           </div>
         </div>
         {/* Account Section Ends */}
