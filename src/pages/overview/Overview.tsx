@@ -20,8 +20,10 @@ const Overview: React.FC = () => {
   useEffect(() => {
     accountStore.getAllAccounts()
     window.addEventListener("keydown", accountStore.globalHotKey)
+    window.addEventListener("keydown", transactionStore.globalHotKey)
     return () => {
       window.removeEventListener("keydown", accountStore.globalHotKey)
+      window.removeEventListener("keydown", transactionStore.globalHotKey)
     }
   }, [])
   return (
