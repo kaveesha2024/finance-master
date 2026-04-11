@@ -14,6 +14,7 @@ export type TransactionStore = {
   globalHotKey: (event: { key: string }) => void
   openTransactionForm: () => void
   closeTransactionForm: () => void
+  selectTransactionMethod: (method: "income" | "expense" | null) => void
 }
 
 const useTransactionStore = create<TransactionStore>((set, get) => ({
@@ -46,6 +47,15 @@ const useTransactionStore = create<TransactionStore>((set, get) => ({
     set((state) => ({
       ...state,
       transactionMode: false,
+    }))
+  },
+  selectTransactionMethod: (method: "income" | "expense" | null) => {
+    set((state) => ({
+      ...state,
+      transactionFormData: {
+        ...state.transactionFormData,
+        transactionMethod: method,
+      },
     }))
   },
 }))
