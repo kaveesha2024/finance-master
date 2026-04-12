@@ -13,17 +13,22 @@ import CreateNewAccountForm from "@/features/accounts/components/CreateNewAccoun
 import type { Account } from "@/features/accounts/type/account"
 import TransactionForm from "@/features/transaction/components/TransactionForm.tsx"
 import useTransactionStore from "@/features/transaction/store/transaction.store.ts"
+import useCategoryStore from "@/features/category/store/category.store.ts"
+import ChooseCategoryForm from "@/features/category/components/ChooseCategoryForm.tsx"
 
 const Overview: React.FC = () => {
   const accountStore = useAccountStore()
   const transactionStore = useTransactionStore()
+  const categoryStore = useCategoryStore()
   useEffect(() => {
     accountStore.getAllAccounts()
     window.addEventListener("keydown", accountStore.globalHotKey)
     window.addEventListener("keydown", transactionStore.globalHotKey)
+    window.addEventListener("keydown", categoryStore.globalHotKey)
     return () => {
       window.removeEventListener("keydown", accountStore.globalHotKey)
       window.removeEventListener("keydown", transactionStore.globalHotKey)
+      window.removeEventListener("keydown", categoryStore.globalHotKey)
     }
   }, [])
   return (
@@ -178,6 +183,7 @@ const Overview: React.FC = () => {
       </div>
       {accountStore.isCreateNewAccountFormOpen && <CreateNewAccountForm />}
       {transactionStore.transactionMode && <TransactionForm />}
+      {categoryStore.isCategoryFormOpen && <ChooseCategoryForm />}
     </>
   )
 }
