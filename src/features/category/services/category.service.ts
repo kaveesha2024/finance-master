@@ -17,9 +17,9 @@ export const addCategory = (category: Category): boolean => {
   setCategories(categories)
   return true
 }
-export const deleteCategory = (id: string): boolean => {
+export const deleteCategory = (name: string): boolean => {
   const categories = getCategories()
-  const newCategories = categories.filter((category) => category.id !== id)
+  const newCategories = categories.filter((category) => category.name !== name)
   setCategories(newCategories)
   return true
 }

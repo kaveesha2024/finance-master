@@ -4,7 +4,7 @@ import type { ChangeEvent } from "react"
 import {
   addAccount,
   getAccounts,
-} from "@/features/accounts/services/accountService.ts"
+} from "@/features/accounts/services/account.service.ts"
 import { v4 as uuid } from "uuid"
 import { toast } from "sonner"
 
