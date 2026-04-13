@@ -1,10 +1,17 @@
 import { create } from "zustand"
 import type { ChangeEvent } from "react"
+import {
+  addCategory,
+  getCategories,
+} from "@/features/category/services/category.service.ts"
+import { toast } from "sonner"
+import type { Category } from "@/features/category/type/category"
 
 export type CategoryStore = {
   isCategoryFormOpen: boolean
   selectedCategory: string | null
   errorMessage: string | null
+  allCategories: Category[]
   categoryFormData: {
     name: string
     comment: string
@@ -15,14 +22,16 @@ export type CategoryStore = {
   globalHotKey: (event: { key: string }) => void
   handleTransactionForm: (open: boolean) => void
   setSelectedCategory: (selectedCategory: string) => void
+  setErrorMessage: (message: string | null) => void
   createNewCategory: () => void
-  setErrorMessage: (message: string) => void
+  getAllCategories: () => void
 }
 
 const useCategoryStore = create<CategoryStore>((set, get) => ({
   isCategoryFormOpen: false,
   selectedCategory: null,
   errorMessage: null,
+  allCategories: [],
   categoryFormData: {
     name: "",
     comment: "",
@@ -51,6 +60,7 @@ const useCategoryStore = create<CategoryStore>((set, get) => ({
     }))
   },
   handleCreateNewCategoryFormInputs: (event) => {
+    get().setErrorMessage(null)
     const { name, value } = event.target
     set((state) => ({
       ...state,
@@ -66,17 +76,37 @@ const useCategoryStore = create<CategoryStore>((set, get) => ({
       get().setErrorMessage("Fill all the inputs to create new category")
       return
     }
-    // todo create new category if name doesn't exists...
+    const categories = getCategories()
+    const existingCategory = categories.find(
+      (category) => category.name === categoryFormData.name
+    )
+    if (!existingCategory) {
+      addCategory(get().categoryFormData)
+      get().getAllCategories()
+      toast.success("Category added successfully.")
+      return
+    } else {
+      get().setErrorMessage("This category already exists")
+      return
+    }
   },
-  handleTransactionForm: (open) =>
+  handleTransactionForm: (open) => {
     set((state) => ({
       ...state,
       isCategoryFormOpen: open,
-    })),
+    }))
+  },
   setSelectedCategory: (selectedCategory) => {
     set((state) => ({
       ...state,
       selectedCategory,
+    }))
+  },
+  getAllCategories: () => {
+    const allCategories = getCategories()
+    set((state) => ({
+      ...state,
+      allCategories,
     }))
   },
 }))

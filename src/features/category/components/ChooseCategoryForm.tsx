@@ -1,6 +1,5 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { Button } from "@/components/ui/button.tsx"
-import { categories } from "@/features/category/constants/category.constants.ts"
 import useCategoryStore from "@/features/category/store/category.store.ts"
 import { AddSquareIcon } from "@hugeicons/core-free-icons"
 import { HugeiconsIcon } from "@hugeicons/react"
@@ -10,6 +9,9 @@ import { Input } from "@/components/ui/input.tsx"
 
 const ChooseCategoryForm: React.FC = () => {
   const categoryStore = useCategoryStore()
+  useEffect(() => {
+    categoryStore.getAllCategories()
+  }, [])
   return (
     <div
       className={
@@ -20,11 +22,17 @@ const ChooseCategoryForm: React.FC = () => {
         <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
           Select Category
         </h4>
-        <p className="mb-5 text-muted-foreground">
+        <p className="text-muted-foreground">
           Choose a category for this transaction
         </p>
+        {categoryStore.errorMessage && (
+          <small className="my-5 text-sm leading-none font-medium text-destructive">
+            {categoryStore.errorMessage}
+          </small>
+        )}
         <FieldGroup className={"mb-2"}>
           <FieldSet>
+            <Field></Field>
             <Field orientation={"horizontal"}>
               <Field>
                 <Label>Create new category</Label>
@@ -46,7 +54,7 @@ const ChooseCategoryForm: React.FC = () => {
           </FieldSet>
         </FieldGroup>
         <div className={"grid w-full grid-cols-5 gap-1"}>
-          {categories.map((category, index: number) => (
+          {categoryStore.allCategories.map((category, index: number) => (
             <Button
               key={index}
               onClick={() => categoryStore.setSelectedCategory(category.name)}
@@ -61,6 +69,7 @@ const ChooseCategoryForm: React.FC = () => {
           size={"icon-lg"}
           variant={"ghost"}
           className={"absolute top-0 right-0 p-2"}
+          onClick={categoryStore.createNewCategory}
         >
           <HugeiconsIcon icon={AddSquareIcon} />
         </Button>
