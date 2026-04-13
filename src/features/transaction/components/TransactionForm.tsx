@@ -44,7 +44,8 @@ const TransactionForm: React.FC = () => {
               <FieldSet>
                 <FieldLegend>
                   Create transaction | Category ={" "}
-                  {categoryStore.selectedCategory}
+                  {categoryStore.selectedCategory} | Method ={" "}
+                  {transactionStore.transactionFormData.transactionMethod}
                 </FieldLegend>
                 <FieldDescription>
                   All transactions are secured

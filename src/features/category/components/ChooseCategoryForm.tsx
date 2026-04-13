@@ -28,18 +28,27 @@ const ChooseCategoryForm: React.FC = () => {
             <Field orientation={"horizontal"}>
               <Field>
                 <Label>Create new category</Label>
-                <Input />
+                <Input
+                  name={"name"}
+                  value={categoryStore.categoryFormData.name}
+                  onChange={categoryStore.handleCreateNewCategoryFormInputs}
+                />
               </Field>
               <Field>
                 <Label>Comment</Label>
-                <Input />
+                <Input
+                  name={"comment"}
+                  value={categoryStore.categoryFormData.comment}
+                  onChange={categoryStore.handleCreateNewCategoryFormInputs}
+                />
               </Field>
             </Field>
           </FieldSet>
         </FieldGroup>
         <div className={"grid w-full grid-cols-5 gap-1"}>
-          {categories.map((category) => (
+          {categories.map((category, index: number) => (
             <Button
+              key={index}
               onClick={() => categoryStore.setSelectedCategory(category.name)}
               variant={"ghost"}
               size={"lg"}
