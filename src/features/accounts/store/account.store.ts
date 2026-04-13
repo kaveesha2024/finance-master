@@ -4,7 +4,7 @@ import type { ChangeEvent } from "react"
 import {
   addAccount,
   getAccounts,
-} from "@/features/accounts/services/accountService.ts"
+} from "@/features/accounts/services/account.service.ts"
 import { v4 as uuid } from "uuid"
 import { toast } from "sonner"
 
@@ -39,6 +39,11 @@ const useAccountStore = create<AccountStore>((set, get) => ({
         set((state) => ({
           ...state,
           isCreateNewAccountFormOpen: false,
+          errorMessage: null,
+          createNewAccountFormData: {
+            balance: 0,
+            name: "",
+          },
         }))
         break
       case "F9":

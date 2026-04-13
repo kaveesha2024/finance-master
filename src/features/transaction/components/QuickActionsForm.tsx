@@ -8,9 +8,11 @@ import {
 } from "@/components/ui/field.tsx"
 import { Button } from "@/components/ui/button.tsx"
 import useTransactionStore from "@/features/transaction/store/transaction.store.ts"
+import useCategoryStore from "@/features/category/store/category.store.ts"
 
 const QuickActionsForm: React.FC = () => {
   const transactionStore = useTransactionStore()
+  const categoryStore = useCategoryStore()
   return (
     <div>
       <FieldGroup>
@@ -23,6 +25,7 @@ const QuickActionsForm: React.FC = () => {
                 <Button
                   onClick={() => {
                     transactionStore.selectTransactionMethod("expense")
+                    categoryStore.handleTransactionForm(true)
                   }}
                 >
                   Expense
@@ -32,6 +35,7 @@ const QuickActionsForm: React.FC = () => {
                 <Button
                   onClick={() => {
                     transactionStore.selectTransactionMethod("income")
+                    categoryStore.handleTransactionForm(true)
                   }}
                 >
                   Income
