@@ -35,6 +35,18 @@ const useTransactionStore = create<TransactionStore>((set, get) => ({
         break
       case "Escape":
         get().closeTransactionForm()
+        set((state) => ({
+          ...state,
+          transactionFormData: {
+            transactionMethod: null,
+            firstSelectedAccount: "",
+            secondSelectedAccount: "",
+            amount: 0,
+            transactionDate: "",
+            description: "",
+            paymentReceipt: "",
+          },
+        }))
     }
   },
   openTransactionForm: () => {

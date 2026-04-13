@@ -23,6 +23,7 @@ const useCategoryStore = create<CategoryStore>((set) => ({
         set((state) => ({
           ...state,
           isCategoryFormOpen: false,
+          selectedCategory: null,
         }))
         break
     }

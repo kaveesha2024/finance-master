@@ -39,6 +39,11 @@ const useAccountStore = create<AccountStore>((set, get) => ({
         set((state) => ({
           ...state,
           isCreateNewAccountFormOpen: false,
+          errorMessage: null,
+          createNewAccountFormData: {
+            balance: 0,
+            name: "",
+          },
         }))
         break
       case "F9":
