@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import {
   Field,
   FieldDescription,
@@ -28,11 +28,16 @@ import { Textarea } from "@/components/ui/textarea.tsx"
 import useTransactionStore from "@/features/transaction/store/transaction.store.ts"
 import QuickActionsForm from "@/features/transaction/components/QuickActionsForm.tsx"
 import useCategoryStore from "@/features/category/store/category.store.ts"
+import useAccountStore from "@/features/accounts/store/account.store.ts"
 
 const TransactionForm: React.FC = () => {
   const [date, setDate] = React.useState<Date>()
+  const accountStore = useAccountStore()
   const transactionStore = useTransactionStore()
   const categoryStore = useCategoryStore()
+  useEffect(() => {
+    accountStore.getAllAccounts()
+  }, [])
   return (
     <div className={"fixed top-0 left-0 h-full w-full backdrop-blur-2xl"}>
       <div
@@ -54,7 +59,11 @@ const TransactionForm: React.FC = () => {
                   <Field>
                     <FieldLabel htmlFor="amount">Transaction amount</FieldLabel>
                     <Input
+                      onChange={
+                        transactionStore.handleTransactionFormInputFields
+                      }
                       name={"amount"}
+                      value={transactionStore.transactionFormData.amount}
                       id={"amount"}
                       autoFocus={true}
                       type={"number"}
@@ -63,13 +72,24 @@ const TransactionForm: React.FC = () => {
                   </Field>
                   <Field className={"mt-3"}>
                     <FieldLabel htmlFor={"account"}>Select account</FieldLabel>
-                    <Select id={"account"}>
+                    <Select
+                      id={"account"}
+                      onValueChange={(event) => {
+                        console.log(event)
+                      }}
+                    >
                       <SelectTrigger>
                         <SelectValue placeholder={"Select account"} />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectGroup>
-                          <SelectItem value={"apple"}>Apple</SelectItem>
+                          {accountStore.accounts.map(
+                            (account, index: number) => (
+                              <SelectItem value={account.id} key={index}>
+                                {account.name}
+                              </SelectItem>
+                            )
+                          )}
                         </SelectGroup>
                       </SelectContent>
                     </Select>
@@ -110,6 +130,11 @@ const TransactionForm: React.FC = () => {
                     <Textarea
                       id="textarea-message"
                       placeholder="Type your comment here."
+                      onChange={
+                        transactionStore.handleTransactionFormInputFields
+                      }
+                      name={"description"}
+                      value={transactionStore.transactionFormData.description}
                     />
                   </Field>
                   <Field>
