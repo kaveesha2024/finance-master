@@ -4,20 +4,39 @@ export type CategoryStore = {
   isCategoryFormOpen: boolean
   selectedCategory: string | null
   globalHotKey: (event: { key: string }) => void
+  handleTransactionForm: (open: boolean) => void
+  setSelectedCategory: (selectedCategory: string) => void
 }
 
 const useCategoryStore = create<CategoryStore>((set) => ({
-  isCategoryFormOpen: true,
+  isCategoryFormOpen: false,
   selectedCategory: null,
   globalHotKey: (event) => {
     switch (event.key) {
-      case "F7":
+      case "+":
         set((state) => ({
           ...state,
           isCategoryFormOpen: true,
         }))
         break
+      case "Escape":
+        set((state) => ({
+          ...state,
+          isCategoryFormOpen: false,
+        }))
+        break
     }
+  },
+  handleTransactionForm: (open) =>
+    set((state) => ({
+      ...state,
+      isCategoryFormOpen: open,
+    })),
+  setSelectedCategory: (selectedCategory) => {
+    set((state) => ({
+      ...state,
+      selectedCategory,
+    }))
   },
 }))
 

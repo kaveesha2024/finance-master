@@ -183,7 +183,8 @@ const Overview: React.FC = () => {
       </div>
       {accountStore.isCreateNewAccountFormOpen && <CreateNewAccountForm />}
       {transactionStore.transactionMode && <TransactionForm />}
-      {categoryStore.isCategoryFormOpen && <ChooseCategoryForm />}
+      {categoryStore.isCategoryFormOpen &&
+        categoryStore.selectedCategory === null && <ChooseCategoryForm />}
     </>
   )
 }

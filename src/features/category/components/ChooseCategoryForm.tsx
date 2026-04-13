@@ -1,8 +1,10 @@
 import React from "react"
 import { Button } from "@/components/ui/button.tsx"
 import { categories } from "@/features/category/constants/category.constants.ts"
+import useCategoryStore from "@/features/category/store/category.store.ts"
 
 const ChooseCategoryForm: React.FC = () => {
+  const categoryStore = useCategoryStore()
   return (
     <div
       className={
@@ -18,7 +20,11 @@ const ChooseCategoryForm: React.FC = () => {
         </p>
         <div className={"grid w-full grid-cols-5 grid-rows-5 gap-1"}>
           {categories.map((category) => (
-            <Button variant={"ghost"} size={"lg"}>
+            <Button
+              onClick={() => categoryStore.setSelectedCategory(category.name)}
+              variant={"ghost"}
+              size={"lg"}
+            >
               {category.name}
             </Button>
           ))}
