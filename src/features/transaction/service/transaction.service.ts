@@ -13,7 +13,7 @@ export const setTransactions = (transactions: Transaction[]): boolean => {
 }
 export const addTransaction = (transaction: Transaction): boolean => {
   const allTransactions = getAllTransactions()
-  allTransactions.push(transaction)
+  allTransactions.unshift(transaction)
   setTransactions(allTransactions)
   return true
 }
