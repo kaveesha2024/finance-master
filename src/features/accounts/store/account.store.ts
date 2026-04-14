@@ -5,7 +5,6 @@ import {
   addAccount,
   getAccounts,
 } from "@/features/accounts/services/account.service.ts"
-import { v4 as uuid } from "uuid"
 import { toast } from "sonner"
 
 type AccountStore = {
@@ -20,7 +19,7 @@ type AccountStore = {
   handleCreateNewAccountFormInputs: (
     event: ChangeEvent<HTMLInputElement>
   ) => void
-  createError: (error?: string) => void
+  setError: (error?: string) => void
   createNewAccount: () => void
   getAllAccounts: () => void
 }
@@ -57,7 +56,7 @@ const useAccountStore = create<AccountStore>((set, get) => ({
     }
   },
   handleCreateNewAccountFormInputs: (event) => {
-    get().createError()
+    get().setError()
     const { name, value } = event.target
     set((state) => ({
       ...state,
@@ -67,21 +66,27 @@ const useAccountStore = create<AccountStore>((set, get) => ({
       },
     }))
   },
-  createError: (error) => {
+  setError: (error) => {
     set((state) => ({
       ...state,
       errorMessage: error ?? null,
     }))
   },
   createNewAccount: () => {
-    get().createError()
+    get().setError()
     if (get().createNewAccountFormData.name !== "") {
       // todo Check weather the account name is already exists... 🫶🖤
-
+      const allAcounts = getAccounts()
+      const existingAccountIndex = allAcounts.findIndex(
+        (account) => account.name === get().createNewAccountFormData.name
+      )
+      if (existingAccountIndex !== -1) {
+        get().setError("This account is already exists")
+        return
+      }
       const response = addAccount({
         name: get().createNewAccountFormData.name.trim(),
         amount: get().createNewAccountFormData.balance,
-        id: uuid(),
       })
       if (response) {
         set((state) => ({
@@ -100,7 +105,7 @@ const useAccountStore = create<AccountStore>((set, get) => ({
         }))
       }
     } else {
-      get().createError('"Please fill all the information"')
+      get().setError('"Please fill all the information"')
     }
   },
   getAllAccounts: () => {

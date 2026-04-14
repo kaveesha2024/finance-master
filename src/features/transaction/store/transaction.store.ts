@@ -130,7 +130,7 @@ const useTransactionStore = create<TransactionStore>((set, get) => ({
       case "income": {
         const accounts = getAccounts()
         const existingAccountIndex = accounts.findIndex(
-          (account) => account.id === transactionFormData.fromAccount
+          (account) => account.name === transactionFormData.fromAccount
         )
         if (existingAccountIndex !== -1) {
           accounts[existingAccountIndex].amount += transactionFormData.amount
@@ -147,7 +147,7 @@ const useTransactionStore = create<TransactionStore>((set, get) => ({
       case "expense": {
         const accounts = getAccounts()
         const existingAccountIndex = accounts.findIndex(
-          (account) => account.id === transactionFormData.fromAccount
+          (account) => account.name === transactionFormData.fromAccount
         )
         if (existingAccountIndex !== -1) {
           accounts[existingAccountIndex].amount -= transactionFormData.amount

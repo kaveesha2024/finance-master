@@ -91,7 +91,7 @@ const Overview: React.FC = () => {
                     >
                       <div>
                         <p>
-                          {transaction.fromAccount} -
+                          {transaction.fromAccount}-
                           {transaction.transactionMethod}
                         </p>
                         {transaction.comment && (
