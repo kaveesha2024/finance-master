@@ -63,7 +63,7 @@ const useAccountStore = create<AccountStore>((set, get) => ({
       ...state,
       createNewAccountFormData: {
         ...state.createNewAccountFormData,
-        [name]: value,
+        [name]: name === "balance" ? Number(value) : value,
       },
     }))
   },

@@ -74,9 +74,9 @@ const TransactionForm: React.FC = () => {
                     <FieldLabel htmlFor={"account"}>Select account</FieldLabel>
                     <Select
                       id={"account"}
-                      onValueChange={(event) => {
-                        console.log(event)
-                      }}
+                      onValueChange={
+                        transactionStore.handleTransactionFormSelectFields
+                      }
                     >
                       <SelectTrigger>
                         <SelectValue placeholder={"Select account"} />
@@ -137,25 +137,30 @@ const TransactionForm: React.FC = () => {
                       value={transactionStore.transactionFormData.description}
                     />
                   </Field>
-                  <Field>
-                    <FieldLabel htmlFor={"paymentReceipt"}>
-                      Payment receipt
-                    </FieldLabel>
-                    <Input type={"file"} id={"paymentReceipt"} />
-                  </Field>
+                  {/*<Field>*/}
+                  {/*  <FieldLabel htmlFor={"paymentReceipt"}>*/}
+                  {/*    Payment receipt*/}
+                  {/*  </FieldLabel>*/}
+                  {/*  <Input type={"file"} id={"paymentReceipt"} />*/}
+                  {/*</Field>*/}
                   <Field orientation={"horizontal"}>
                     <Field>
                       <Button
-                        onClick={() =>
+                        onClick={() => {
                           transactionStore.selectTransactionMethod(null)
-                        }
+                        }}
                         className={"mt-3 w-full"}
                       >
                         Back
                       </Button>{" "}
                     </Field>{" "}
                     <Field>
-                      <Button className={"mt-3 w-full"}>Confirm</Button>{" "}
+                      <Button
+                        onClick={() => transactionStore.createTransaction(date)}
+                        className={"mt-3 w-full"}
+                      >
+                        Confirm
+                      </Button>{" "}
                     </Field>
                   </Field>
                 </FieldGroup>
