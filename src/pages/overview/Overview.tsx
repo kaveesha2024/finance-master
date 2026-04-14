@@ -92,11 +92,11 @@ const Overview: React.FC = () => {
                       <div className={"flex flex-col gap-1"}>
                         <p className={"flex text-[16px]"}>
                           <span> {transaction.category}</span>
-                          <span>
-                            {transaction.comment && (
-                              <div>-{transaction.comment}</div>
-                            )}
-                          </span>
+                          {/*<span>*/}
+                          {/*  {transaction.comment && (*/}
+                          {/*    <div>-{transaction.comment}</div>*/}
+                          {/*  )}*/}
+                          {/*</span>*/}
                         </p>
                         <div>
                           <p className={"text-xs text-muted-foreground"}>HNB</p>
