@@ -86,14 +86,21 @@ const Overview: React.FC = () => {
                     <div
                       key={index}
                       className={
-                        "flex h-[40px] w-full items-center justify-between border-b hover:bg-secondary"
+                        "-[40px] flex w-full items-center justify-between border-b hover:bg-secondary"
                       }
                     >
-                      <div>
-                        <p>
-                          {transaction.fromAccount}-
-                          {transaction.transactionMethod}
+                      <div className={"flex flex-col gap-1"}>
+                        <p className={"flex text-[16px]"}>
+                          <span> {transaction.category}</span>
+                          <span>
+                            {transaction.comment && (
+                              <div>-{transaction.comment}</div>
+                            )}
+                          </span>
                         </p>
+                        <div>
+                          <p className={"text-xs text-muted-foreground"}>HNB</p>
+                        </div>
                         {transaction.comment && (
                           <blockquote className="text-xs text-muted-foreground italic">
                             {transaction.comment}

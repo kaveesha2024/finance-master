@@ -156,7 +156,12 @@ const TransactionForm: React.FC = () => {
                     </Field>{" "}
                     <Field>
                       <Button
-                        onClick={() => transactionStore.createTransaction(date)}
+                        onClick={() =>
+                          transactionStore.createTransaction(
+                            date,
+                            categoryStore.selectedCategory
+                          )
+                        }
                         className={"mt-3 w-full"}
                       >
                         Confirm

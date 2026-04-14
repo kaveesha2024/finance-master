@@ -33,7 +33,10 @@ export type TransactionStore = {
   ) => void
   handleTransactionFormSelectFields: (event: string | null) => void
   selectTransactionMethod: (method: "income" | "expense" | null) => void
-  createTransaction: (transactionDate: Date | undefined) => void
+  createTransaction: (
+    transactionDate: Date | undefined,
+    categoryName: string | null
+  ) => void
   escape: () => void
   getAllTransactions: () => void
 }
@@ -106,7 +109,7 @@ const useTransactionStore = create<TransactionStore>((set, get) => ({
       },
     }))
   },
-  createTransaction: (transactionDate) => {
+  createTransaction: (transactionDate, categoryName) => {
     const transactionFormData = get().transactionFormData
     if (transactionDate === undefined) {
       set((state) => ({
@@ -121,6 +124,7 @@ const useTransactionStore = create<TransactionStore>((set, get) => ({
       id: uuid(),
       transactionMethod: transactionFormData.transactionMethod,
       amount: transactionFormData.amount,
+      category: categoryName ?? "",
       fromAccount: transactionFormData.fromAccount,
       toAccount: transactionFormData.toAccount,
       transactionFee: 0,

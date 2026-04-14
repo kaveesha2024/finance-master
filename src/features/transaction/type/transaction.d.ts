@@ -2,6 +2,7 @@ import type { TransactionStore } from "@/features/transaction/store/transaction.
 
 export type Transaction = {
   id: string
+  category: string
   amount: number
   comment: string
   transactionMethod: TransactionStore["transactionFormData"]["transactionMethod"]
