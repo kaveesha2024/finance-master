@@ -15,6 +15,7 @@ import TransactionForm from "@/features/transaction/components/TransactionForm.t
 import useTransactionStore from "@/features/transaction/store/transaction.store.ts"
 import useCategoryStore from "@/features/category/store/category.store.ts"
 import ChooseCategoryForm from "@/features/category/components/ChooseCategoryForm.tsx"
+import type { Transaction } from "@/features/transaction/type/transaction"
 
 const Overview: React.FC = () => {
   const accountStore = useAccountStore()
@@ -22,6 +23,7 @@ const Overview: React.FC = () => {
   const categoryStore = useCategoryStore()
   useEffect(() => {
     accountStore.getAllAccounts()
+    transactionStore.getAllTransactions()
     window.addEventListener("keydown", accountStore.globalHotKey)
     window.addEventListener("keydown", transactionStore.globalHotKey)
     window.addEventListener("keydown", categoryStore.globalHotKey)
@@ -54,7 +56,7 @@ const Overview: React.FC = () => {
                 </CardHeader>
                 <CardContent>
                   <p className={"text-3xl"}>
-                    Rs {Number(account.amount).toFixed(2)}/=
+                    Rs {Number(account.amount).toLocaleString()}/=
                   </p>
                 </CardContent>
               </Card>
@@ -79,27 +81,37 @@ const Overview: React.FC = () => {
                 </CardAction>
               </CardHeader>
               <CardContent className={"flex flex-col gap-5"}>
-                <div
-                  className={
-                    "flex h-[40px] w-full items-center justify-start border-b hover:bg-secondary"
-                  }
-                >
-                  Kaveesha
-                </div>
-                <div
-                  className={
-                    "flex h-[40px] w-full items-center justify-start border-b hover:bg-secondary"
-                  }
-                >
-                  Kaveesha
-                </div>
-                <div
-                  className={
-                    "flex h-[40px] w-full items-center justify-start border-b hover:bg-secondary"
-                  }
-                >
-                  Kaveesha
-                </div>
+                {transactionStore.allTransactions.map(
+                  (transaction: Transaction, index: number) => (
+                    <div
+                      key={index}
+                      className={
+                        "flex h-[40px] w-full items-center justify-between border-b hover:bg-secondary"
+                      }
+                    >
+                      <div>
+                        <p>
+                          {transaction.fromAccount} -
+                          {transaction.transactionMethod}
+                        </p>
+                        {transaction.comment && (
+                          <blockquote className="text-xs text-muted-foreground italic">
+                            {transaction.comment}
+                          </blockquote>
+                        )}
+                      </div>
+                      <p
+                        className={
+                          transaction.transactionMethod === "income"
+                            ? "font-semibold text-chart-3"
+                            : "font-semibold text-destructive"
+                        }
+                      >
+                        Rs {transaction.amount.toLocaleString()}/=
+                      </p>
+                    </div>
+                  )
+                )}
               </CardContent>
             </Card>
           </div>

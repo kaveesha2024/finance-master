@@ -4,10 +4,15 @@ import {
   getAccounts,
   setAccounts,
 } from "@/features/accounts/services/account.service.ts"
-import { addTransaction } from "@/features/transaction/service/transaction.service.ts"
+import {
+  addTransaction,
+  getAllTransactions,
+} from "@/features/transaction/service/transaction.service.ts"
 import { v4 as uuid } from "uuid"
+import type { Transaction } from "@/features/transaction/type/transaction"
 
 export type TransactionStore = {
+  allTransactions: Transaction[]
   transactionMode: boolean
   errorMessage: string | null
   transactionFormData: {
@@ -30,9 +35,11 @@ export type TransactionStore = {
   selectTransactionMethod: (method: "income" | "expense" | null) => void
   createTransaction: (transactionDate: Date | undefined) => void
   escape: () => void
+  getAllTransactions: () => void
 }
 
 const useTransactionStore = create<TransactionStore>((set, get) => ({
+  allTransactions: [],
   transactionMode: false,
   errorMessage: null,
   transactionFormData: {
@@ -167,6 +174,12 @@ const useTransactionStore = create<TransactionStore>((set, get) => ({
         description: "",
         paymentReceipt: "",
       },
+    }))
+  },
+  getAllTransactions: () => {
+    set((state) => ({
+      ...state,
+      allTransactions: getAllTransactions(),
     }))
   },
 }))
