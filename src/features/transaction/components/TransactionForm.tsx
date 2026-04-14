@@ -65,9 +65,9 @@ const TransactionForm: React.FC = () => {
                       name={"amount"}
                       value={transactionStore.transactionFormData.amount}
                       id={"amount"}
-                      autoFocus={true}
                       type={"number"}
                       min={0}
+                      autoFocus={true}
                     />
                   </Field>
                   <Field className={"mt-3"}>

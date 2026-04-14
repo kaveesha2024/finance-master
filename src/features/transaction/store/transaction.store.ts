@@ -4,6 +4,8 @@ import {
   getAccounts,
   setAccounts,
 } from "@/features/accounts/services/account.service.ts"
+import { addTransaction } from "@/features/transaction/service/transaction.service.ts"
+import { v4 as uuid } from "uuid"
 
 export type TransactionStore = {
   transactionMode: boolean
@@ -27,6 +29,7 @@ export type TransactionStore = {
   handleTransactionFormSelectFields: (event: string | null) => void
   selectTransactionMethod: (method: "income" | "expense" | null) => void
   createTransaction: (transactionDate: Date | undefined) => void
+  escape: () => void
 }
 
 const useTransactionStore = create<TransactionStore>((set, get) => ({
@@ -47,19 +50,7 @@ const useTransactionStore = create<TransactionStore>((set, get) => ({
         get().openTransactionForm()
         break
       case "Escape":
-        get().closeTransactionForm()
-        set((state) => ({
-          ...state,
-          transactionFormData: {
-            transactionMethod: null,
-            fromAccount: "",
-            toAccount: "",
-            amount: 0,
-            transactionDate: "",
-            description: "",
-            paymentReceipt: "",
-          },
-        }))
+        get().escape()
     }
   },
   setError: (errorMessage) => {
@@ -119,6 +110,15 @@ const useTransactionStore = create<TransactionStore>((set, get) => ({
         },
       }))
     }
+    addTransaction({
+      id: uuid(),
+      transactionMethod: transactionFormData.transactionMethod,
+      amount: transactionFormData.amount,
+      fromAccount: transactionFormData.fromAccount,
+      toAccount: transactionFormData.toAccount,
+      transactionFee: 0,
+      comment: transactionFormData.description,
+    })
     switch (transactionFormData.transactionMethod) {
       case "income": {
         const accounts = getAccounts()
@@ -151,7 +151,23 @@ const useTransactionStore = create<TransactionStore>((set, get) => ({
         break
       }
     }
+    get().escape()
     location.reload()
+  },
+  escape: () => {
+    get().closeTransactionForm()
+    set((state) => ({
+      ...state,
+      transactionFormData: {
+        transactionMethod: null,
+        fromAccount: "",
+        toAccount: "",
+        amount: 0,
+        transactionDate: "",
+        description: "",
+        paymentReceipt: "",
+      },
+    }))
   },
 }))
 export default useTransactionStore
