@@ -13,7 +13,7 @@
     --color-primary: #F7F7F7;
     --color-secondary: #262626;
     --color-muted: #8d909b;
-    --color-destructive: #AE2448;
+    --color-destructive: #dc144a;
 }
 
 /*@custom-variant dark (&:is(.dark *));*/
