@@ -10,7 +10,7 @@ const CreateNewAccountForm: React.FC = () => {
   return (
     <div className={"fixed top-0 left-0 h-full w-full backdrop-blur-2xl"}>
       <div className={"flex h-full w-full items-center justify-center"}>
-        <div className={"bg-secondary p-5"}>
+        <div className={"bg-background p-5"}>
           <Header text={"Create New Account"} />
           {accountStore.errorMessage && (
             <div className={"mb-2 text-sm text-destructive"}>

@@ -18,7 +18,7 @@ const ChooseCategoryForm: React.FC = () => {
         "fixed top-0 left-0 flex h-full w-full items-center justify-center backdrop-blur-2xl"
       }
     >
-      <div className={"relative bg-secondary p-5"}>
+      <div className={"relative bg-background p-5"}>
         <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
           Select Category
         </h4>
