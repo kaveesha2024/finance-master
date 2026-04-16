@@ -14,7 +14,7 @@ type AccountStore = {
     name: string
     balance: number
   }
-  accounts: Account[]
+  allAccounts: Account[]
   globalHotKey: (event: { key: string }) => void
   handleCreateNewAccountFormInputs: (
     event: ChangeEvent<HTMLInputElement>
@@ -31,7 +31,7 @@ const useAccountStore = create<AccountStore>((set, get) => ({
     balance: 0,
     name: "",
   },
-  accounts: [],
+  allAccounts: [],
   globalHotKey: (event) => {
     switch (event.key) {
       case "Escape":
@@ -112,7 +112,7 @@ const useAccountStore = create<AccountStore>((set, get) => ({
     const allAccounts = getAccounts()
     set((state) => ({
       ...state,
-      accounts: allAccounts,
+      allAccounts: allAccounts,
     }))
   },
 }))

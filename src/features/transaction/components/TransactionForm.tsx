@@ -81,7 +81,7 @@ const TransactionForm: React.FC = () => {
                       </SelectTrigger>
                       <SelectContent>
                         <SelectGroup>
-                          {accountStore.accounts.map(
+                          {accountStore.allAccounts.map(
                             (account, index: number) => (
                               <SelectItem value={account.name} key={index}>
                                 {account.name}

@@ -1,3 +1,4 @@
+/*
 import React, { useEffect } from "react"
 import Header from "@/components/ui/header.tsx"
 import {
@@ -36,7 +37,7 @@ const Overview: React.FC = () => {
   return (
     <>
       <div className="m-5 w-full">
-        {/* Account Section Starts */}
+        {/!* Account Section Starts *!/}
         <div className={"w-full"}>
           <div className={"flex items-center gap-2"}>
             <Header text={"Accounts"} />
@@ -45,7 +46,7 @@ const Overview: React.FC = () => {
             </div>
           </div>
           <div className={"flex gap-5"}>
-            {accountStore.accounts.map((account: Account, index: number) => (
+            {accountStore.allAccounts.map((account: Account, index: number) => (
               <Card key={index} className={"w-[400px]"}>
                 <CardHeader>
                   <CardTitle>{account.name}</CardTitle>
@@ -63,10 +64,10 @@ const Overview: React.FC = () => {
             ))}
           </div>
         </div>
-        {/* Account Section Ends */}
+        {/!* Account Section Ends *!/}
 
         <div className={"mt-10 grid w-full grid-cols-3 gap-5"}>
-          {/* Transactions Section */}
+          {/!* Transactions Section *!/}
           <div>
             <Header text={"Recent Transactions"} />
             <Card>
@@ -128,3 +129,4 @@ const Overview: React.FC = () => {
 }
 
 export default Overview
+*/
