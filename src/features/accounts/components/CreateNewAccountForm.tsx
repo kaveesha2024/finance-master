@@ -1,16 +1,22 @@
 import React from "react"
 import Header from "@/components/ui/header.tsx"
-import { Field, FieldDescription, FieldLabel } from "@/components/ui/field.tsx"
+import {
+  Field,
+  FieldContent,
+  FieldDescription,
+  FieldLabel,
+} from "@/components/ui/field.tsx"
 import { Input } from "@/components/ui/input.tsx"
 import { Button } from "@/components/ui/button.tsx"
 import useAccountStore from "@/features/accounts/store/account.store.ts"
+import { Switch } from "@/components/ui/switch"
 
 const CreateNewAccountForm: React.FC = () => {
   const accountStore = useAccountStore()
   return (
     <div className={"fixed top-0 left-0 h-full w-full backdrop-blur-2xl"}>
       <div className={"flex h-full w-full items-center justify-center"}>
-        <div className={"bg-secondary p-5"}>
+        <div className={"bg-background p-5"}>
           <Header text={"Create New Account"} />
           {accountStore.errorMessage && (
             <div className={"mb-2 text-sm text-destructive"}>
@@ -42,6 +48,30 @@ const CreateNewAccountForm: React.FC = () => {
               </FieldDescription>
             </Field>
           </Field>
+
+          {/**/}
+          <Field orientation="horizontal" className="mb-5 max-w-sm">
+            <FieldContent>
+              <FieldLabel htmlFor="switch-focus-mode">
+                Show in Overall balance
+              </FieldLabel>
+              <FieldDescription>
+                If turned off, Balance of this account will not be shown in the
+                overall balance section.
+              </FieldDescription>
+            </FieldContent>
+            <Switch
+              id="switch-focus-mode"
+              onCheckedChange={(checked) => {
+                accountStore.setShowInOverallBalance(checked)
+              }}
+              checked={
+                accountStore.createNewAccountFormData.showInOverallBalance
+              }
+            />
+          </Field>
+          {/**/}
+
           <div className="mb-2 font-mono text-xs text-muted-foreground">
             (Press <kbd>Enter</kbd> to create)
           </div>

@@ -1,11 +1,15 @@
 import React from "react"
 import { Route, Routes } from "react-router-dom"
-import Overview from "@/pages/overview/Overview.tsx"
+import AppLayout from "@/layouts/AppLayout.tsx"
+import Home from "@/pages/home/Home.tsx"
 
 const AppRoutes: React.FC = () => {
   return (
     <Routes>
-      <Route path={"/"} element={<Overview />} />
+      <Route element={<AppLayout />}>
+        <Route path={"/"} element={<Home />} />
+      </Route>
+      {/*<Route path={"/"} element={<Overview />} />*/}
     </Routes>
   )
 }

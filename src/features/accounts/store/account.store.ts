@@ -4,6 +4,7 @@ import type { ChangeEvent } from "react"
 import {
   addAccount,
   getAccounts,
+  isAccountAlreadyExists,
 } from "@/features/accounts/services/account.service.ts"
 import { toast } from "sonner"
 
@@ -13,15 +14,19 @@ type AccountStore = {
   createNewAccountFormData: {
     name: string
     balance: number
+    showInOverallBalance: boolean
   }
-  accounts: Account[]
+  overallBalance: number
+  allAccounts: Account[]
   globalHotKey: (event: { key: string }) => void
   handleCreateNewAccountFormInputs: (
     event: ChangeEvent<HTMLInputElement>
   ) => void
   setError: (error?: string) => void
+  setShowInOverallBalance: (showInOverallBalance: boolean) => void
   createNewAccount: () => void
   getAllAccounts: () => void
+  getOverallBalance: () => void
 }
 
 const useAccountStore = create<AccountStore>((set, get) => ({
@@ -30,8 +35,10 @@ const useAccountStore = create<AccountStore>((set, get) => ({
   createNewAccountFormData: {
     balance: 0,
     name: "",
+    showInOverallBalance: true,
   },
-  accounts: [],
+  allAccounts: [],
+  overallBalance: 0,
   globalHotKey: (event) => {
     switch (event.key) {
       case "Escape":
@@ -42,6 +49,7 @@ const useAccountStore = create<AccountStore>((set, get) => ({
           createNewAccountFormData: {
             balance: 0,
             name: "",
+            showInOverallBalance: true,
           },
         }))
         break
@@ -66,6 +74,15 @@ const useAccountStore = create<AccountStore>((set, get) => ({
       },
     }))
   },
+  setShowInOverallBalance: (event) => {
+    set((state) => ({
+      ...state,
+      createNewAccountFormData: {
+        ...state.createNewAccountFormData,
+        showInOverallBalance: event,
+      },
+    }))
+  },
   setError: (error) => {
     set((state) => ({
       ...state,
@@ -75,9 +92,12 @@ const useAccountStore = create<AccountStore>((set, get) => ({
   createNewAccount: () => {
     get().setError()
     if (get().createNewAccountFormData.name !== "") {
-      // todo Check weather the account name is already exists... 🫶🖤
-      const allAcounts = getAccounts()
-      const existingAccountIndex = allAcounts.findIndex(
+      if (isAccountAlreadyExists(get().createNewAccountFormData.name)) {
+        get().setError("This account name already exists")
+        return
+      }
+      const allAccounts = getAccounts()
+      const existingAccountIndex = allAccounts.findIndex(
         (account) => account.name === get().createNewAccountFormData.name
       )
       if (existingAccountIndex !== -1) {
@@ -87,6 +107,8 @@ const useAccountStore = create<AccountStore>((set, get) => ({
       const response = addAccount({
         name: get().createNewAccountFormData.name.trim(),
         amount: get().createNewAccountFormData.balance,
+        showInOverallBalance:
+          get().createNewAccountFormData.showInOverallBalance,
       })
       if (response) {
         set((state) => ({
@@ -107,12 +129,26 @@ const useAccountStore = create<AccountStore>((set, get) => ({
     } else {
       get().setError('"Please fill all the information"')
     }
+    location.reload()
   },
   getAllAccounts: () => {
     const allAccounts = getAccounts()
     set((state) => ({
       ...state,
-      accounts: allAccounts,
+      allAccounts: allAccounts,
+    }))
+  },
+  getOverallBalance: () => {
+    const accounts = getAccounts()
+    let overallBalance: number = 0
+    for (const account of accounts) {
+      if (account.showInOverallBalance) {
+        overallBalance += account.amount
+      }
+    }
+    set((state) => ({
+      ...state,
+      overallBalance,
     }))
   },
 }))

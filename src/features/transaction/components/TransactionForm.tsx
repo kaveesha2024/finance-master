@@ -40,10 +40,8 @@ const TransactionForm: React.FC = () => {
   }, [])
   return (
     <div className={"fixed top-0 left-0 h-full w-full backdrop-blur-2xl"}>
-      <div
-        className={"l-[10rem] flex h-full w-full items-center justify-center"}
-      >
-        <div className={"w-[500px] bg-secondary p-5"}>
+      <div className={"flex h-full w-full items-center justify-center"}>
+        <div className={"w-[500px] bg-background p-5"}>
           {transactionStore.transactionFormData.transactionMethod !== null ? (
             <FieldGroup>
               <FieldSet>
@@ -83,7 +81,7 @@ const TransactionForm: React.FC = () => {
                       </SelectTrigger>
                       <SelectContent>
                         <SelectGroup>
-                          {accountStore.accounts.map(
+                          {accountStore.allAccounts.map(
                             (account, index: number) => (
                               <SelectItem value={account.name} key={index}>
                                 {account.name}

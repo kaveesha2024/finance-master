@@ -1,11 +1,11 @@
 import type { Account } from "@/features/accounts/type/account"
 
 export const getAccounts = (): Account[] => {
-  const acc = localStorage.getItem("accounts")
-  if (!acc) {
+  const accounts = localStorage.getItem("accounts")
+  if (!accounts) {
     return []
   }
-  return JSON.parse(acc)
+  return JSON.parse(accounts)
 }
 export const setAccounts = (accounts: Account[]): boolean => {
   localStorage.setItem("accounts", JSON.stringify(accounts))
@@ -17,17 +17,31 @@ export const addAccount = (account: Account): boolean => {
   setAccounts(accounts)
   return true
 }
-export const deleteAccount = (id: string): boolean => {
+export const deleteAccount = (name: string): boolean => {
   const accounts = getAccounts()
-  const newAccounts = accounts.filter((account) => account.id !== id)
+  const newAccounts = accounts.filter((account) => account.name !== name)
   setAccounts(newAccounts)
   return true
 }
-export const getAccountById = (id: string): Account | null => {
+export const getAccountById = (name: string): Account | null => {
   const accounts = getAccounts()
-  const account = accounts.find((account) => account.id === id)
+  const account = accounts.find((account) => account.name === name)
   if (!account) {
     return null
   }
   return account
+}
+export const addShowOverallBalanceToAllAccounts = () => {
+  const accounts = getAccounts()
+  const newAccounts: Account[] = []
+  for (const account of accounts) {
+    account.showInOverallBalance = true
+    newAccounts.push(account)
+  }
+  setAccounts(newAccounts)
+}
+export const isAccountAlreadyExists = (accountName: string): boolean => {
+  const accounts = getAccounts()
+  const index = accounts.findIndex((account) => accountName === account.name)
+  return index !== -1
 }
