@@ -4,6 +4,7 @@ import type { ChangeEvent } from "react"
 import {
   addAccount,
   getAccounts,
+  isAccountAlreadyExists,
 } from "@/features/accounts/services/account.service.ts"
 import { toast } from "sonner"
 
@@ -91,7 +92,10 @@ const useAccountStore = create<AccountStore>((set, get) => ({
   createNewAccount: () => {
     get().setError()
     if (get().createNewAccountFormData.name !== "") {
-      // todo Check weather the account name is already exists... 🫶🖤
+      if (isAccountAlreadyExists(get().createNewAccountFormData.name)) {
+        get().setError("This account name already exists")
+        return
+      }
       const allAccounts = getAccounts()
       const existingAccountIndex = allAccounts.findIndex(
         (account) => account.name === get().createNewAccountFormData.name

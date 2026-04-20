@@ -40,3 +40,8 @@ export const addShowOverallBalanceToAllAccounts = () => {
   }
   setAccounts(newAccounts)
 }
+export const isAccountAlreadyExists = (accountName: string): boolean => {
+  const accounts = getAccounts()
+  const index = accounts.findIndex((account) => accountName === account.name)
+  return index !== -1
+}
