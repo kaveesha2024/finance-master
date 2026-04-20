@@ -1,6 +1,12 @@
 import React from "react"
 
-const AllAccountsBalanceCard: React.FC = () => {
+type AllAccountsBalanceCard = {
+  allAccountsBalance: number
+}
+
+const AllAccountsBalanceCard: React.FC<AllAccountsBalanceCard> = ({
+  allAccountsBalance,
+}) => {
   return (
     <div
       className={
@@ -10,7 +16,9 @@ const AllAccountsBalanceCard: React.FC = () => {
       <div className={"flex flex-col gap-2"}>
         <h1 className={"font-medium"}>My Accounts</h1>
         <p className={"text-sm text-muted-foreground"}>All accounts balance</p>
-        <p className={"text-xl font-semibold"}>Rs 27.00</p>
+        <p className={"text-xl font-semibold"}>
+          Rs {allAccountsBalance.toLocaleString()}
+        </p>
       </div>
       <div className={"h-full"}>
         <p className={"cursor-pointer text-sm text-primary"}>See all</p>

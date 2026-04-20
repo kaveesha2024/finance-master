@@ -27,7 +27,9 @@ const Home: React.FC = () => {
   }, [])
   return (
     <div className={"min-h-full w-full"}>
-      <AllAccountsBalanceCard />
+      <AllAccountsBalanceCard
+        allAccountsBalance={accountStore.overallBalance}
+      />
       <div className={"mt-5 grid grid-cols-6 gap-3"}>
         {accountStore.allAccounts.map((account, i) => (
           <AccountCard key={i} name={account.name} amount={account.amount} />

@@ -1,6 +1,10 @@
 import React from "react"
 
-const AppHeader: React.FC = () => {
+type AppHeader = {
+  overallBalance: number
+}
+
+const AppHeader: React.FC<AppHeader> = ({ overallBalance }) => {
   return (
     <header
       id="header"
@@ -8,8 +12,8 @@ const AppHeader: React.FC = () => {
     >
       <p className={""}>
         Overall Balance{" "}
-        <span className={"text-l t font-semibold text-destructive"}>
-          Rs 2,000
+        <span className={"text font-semibold text-destructive"}>
+          Rs {overallBalance.toLocaleString()}
         </span>
       </p>
     </header>
