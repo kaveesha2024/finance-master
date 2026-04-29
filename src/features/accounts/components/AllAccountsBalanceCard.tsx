@@ -1,4 +1,5 @@
 import React from "react"
+import { useNavigate } from "react-router-dom"
 
 type AllAccountsBalanceCard = {
   allAccountsBalance: number
@@ -7,6 +8,7 @@ type AllAccountsBalanceCard = {
 const AllAccountsBalanceCard: React.FC<AllAccountsBalanceCard> = ({
   allAccountsBalance,
 }) => {
+  const navigate = useNavigate()
   return (
     <div
       className={
@@ -21,7 +23,12 @@ const AllAccountsBalanceCard: React.FC<AllAccountsBalanceCard> = ({
         </p>
       </div>
       <div className={"h-full"}>
-        <p className={"cursor-pointer text-sm text-primary"}>See all</p>
+        <p
+          className={"cursor-pointer text-sm text-primary"}
+          onClick={() => navigate("/all_accounts")}
+        >
+          See all
+        </p>
       </div>
     </div>
   )
