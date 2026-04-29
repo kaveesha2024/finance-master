@@ -148,3 +148,8 @@
     @apply font-sans;
     }
 }
+
+::selection {
+    background-color: #08828CFF; /* The highlight color */
+    color: #ffffff;           /* The text color when selected */
+}

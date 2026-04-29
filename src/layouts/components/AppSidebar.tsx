@@ -5,7 +5,6 @@ import { useLocation, useNavigate } from "react-router-dom"
 const AppSidebar: React.FC = () => {
   const navigate = useNavigate()
   const location = useLocation()
-  console.log(location.pathname)
   return (
     <div className="flex h-full w-full flex-col overflow-auto border-r border-border bg-background p-3">
       <h1
@@ -24,7 +23,7 @@ const AppSidebar: React.FC = () => {
               <p
                 key={index}
                 onClick={() => navigate(page.path)}
-                className={`flex w-full cursor-pointer items-center gap-2 rounded-tr-lg px-5 py-3 text-sm font-medium ${location.pathname.includes(page.path) ? "rounded-br-lg border-l-3 border-l-primary bg-secondary" : "border-l-3"}`}
+                className={`flex w-full cursor-pointer items-center gap-2 rounded-tr-lg px-5 py-3 text-sm font-medium ${location.pathname.includes(page.path) ? "rounded-br-lg border-l-3 border-l-primary bg-secondary" : "border-l-3 border-background"}`}
               >
                 <Icon
                   className={`text-xl ${location.pathname.includes(page.path) && "text-primary"}`}
@@ -33,13 +32,6 @@ const AppSidebar: React.FC = () => {
               </p>
             )
           })}
-          {/*<p*/}
-          {/*  className={*/}
-          {/*    "flex w-full cursor-pointer items-center gap-2 rounded-tr-lg rounded-br-lg px-5 py-3 text-sm font-medium text-muted-foreground hover:bg-secondary"*/}
-          {/*  }*/}
-          {/*>*/}
-          {/*  <HiMiniBuildingLibrary className={"text-primar text-xl"} /> Loans*/}
-          {/*</p>*/}
         </div>
       </div>
     </div>

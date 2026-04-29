@@ -129,7 +129,11 @@ const useAccountStore = create<AccountStore>((set, get) => ({
     } else {
       get().setError('"Please fill all the information"')
     }
-    location.reload()
+    set((state) => ({
+      ...state,
+      allAccounts: [...getAccounts()],
+    }))
+    get().getOverallBalance()
   },
   getAllAccounts: () => {
     const allAccounts = getAccounts()

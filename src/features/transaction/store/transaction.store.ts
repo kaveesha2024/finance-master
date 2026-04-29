@@ -162,8 +162,11 @@ const useTransactionStore = create<TransactionStore>((set, get) => ({
         break
       }
     }
+    set((state) => ({
+      ...state,
+      allTransactions: [...getAllTransactions()],
+    }))
     get().escape()
-    location.reload()
   },
   escape: () => {
     get().closeTransactionForm()
