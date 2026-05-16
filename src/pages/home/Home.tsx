@@ -36,23 +36,29 @@ const Home: React.FC = () => {
         ))}
       </div>
       <div className={"mt-5 w-full"}>
-        <h1 className={"mb-3 text-lg font-medium"}>Recent Transactions</h1>
-        <div
-          className={
-            "max-h-[600px] w-[500px] overflow-y-auto rounded-lg border border-border bg-background p-3"
-          }
-        >
-          {transactionStore.allTransactions.map((transaction, i) => (
-            <RecentTransactionTile
-              key={i}
-              category={transaction.category}
-              account={transaction.toAccount}
-              comment={transaction.comment}
-              amount={transaction.amount}
-              transactionMethod={transaction.transactionMethod}
-            />
-          ))}
-        </div>
+        <h1 className={"mb-3 text-lg font-medium"}>
+          {transactionStore.allTransactions.length <= 0
+            ? "No recent transactions"
+            : "Recent Transactions"}
+        </h1>
+        {transactionStore.allTransactions.length > 0 && (
+          <div
+            className={
+              "max-h-150 w-125 overflow-y-auto rounded-lg border border-border bg-background p-3"
+            }
+          >
+            {transactionStore.allTransactions.map((transaction, i) => (
+              <RecentTransactionTile
+                key={i}
+                category={transaction.category}
+                account={transaction.toAccount}
+                comment={transaction.comment}
+                amount={transaction.amount}
+                transactionMethod={transaction.transactionMethod}
+              />
+            ))}
+          </div>
+        )}
       </div>
       {accountStore.isCreateNewAccountFormOpen && <CreateNewAccountForm />}
       {transactionStore.transactionMode && <TransactionForm />}

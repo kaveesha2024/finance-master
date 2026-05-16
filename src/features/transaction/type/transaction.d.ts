@@ -1,7 +1,7 @@
 import type { TransactionStore } from "@/features/transaction/store/transaction.store.ts"
 
 export type Transaction = {
-  id: string
+  id?: string
   category: string
   amount: number
   comment: string

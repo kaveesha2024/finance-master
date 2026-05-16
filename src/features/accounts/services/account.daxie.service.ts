@@ -1,4 +1,5 @@
 import { db } from "@/database/db.ts"
+import type { Account } from "@/features/accounts/type/account"
 
 export const searchAccountsByName = (searchName: string) => {
   if (!searchName.trim()) return
@@ -7,4 +8,8 @@ export const searchAccountsByName = (searchName: string) => {
 
 export const getAllAccounts = async () => {
   return db.accounts.toArray()
+}
+
+export const setAccounts = async (accounts: Account[]) => {
+  await db.accounts.bulkPut(accounts)
 }

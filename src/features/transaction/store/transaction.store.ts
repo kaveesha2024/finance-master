@@ -1,15 +1,15 @@
 import { create } from "zustand"
 import type { ChangeEvent } from "react"
-import {
-  getAccounts,
-  setAccounts,
-} from "@/features/accounts/services/account.service.ts"
-import {
-  addTransaction,
-  getAllTransactions,
-} from "@/features/transaction/service/transaction.service.ts"
-import { v4 as uuid } from "uuid"
 import type { Transaction } from "@/features/transaction/type/transaction"
+import {
+  createTransaction,
+  getAllTransactions,
+} from "@/features/transaction/service/dexie/transaction.service.ts"
+import {
+  getAllAccounts,
+  setAccounts,
+} from "@/features/accounts/services/account.daxie.service.ts"
+import useAccountStore from "@/features/accounts/store/account.store.ts"
 
 export type TransactionStore = {
   allTransactions: Transaction[]
@@ -63,6 +63,21 @@ const useTransactionStore = create<TransactionStore>((set, get) => ({
         get().escape()
     }
   },
+  escape: () => {
+    get().closeTransactionForm()
+    set((state) => ({
+      ...state,
+      transactionFormData: {
+        transactionMethod: null,
+        fromAccount: "",
+        toAccount: "",
+        amount: 0,
+        transactionDate: "",
+        description: "",
+        paymentReceipt: "",
+      },
+    }))
+  },
   setError: (errorMessage) => {
     set((state) => ({
       ...state,
@@ -109,8 +124,8 @@ const useTransactionStore = create<TransactionStore>((set, get) => ({
       },
     }))
   },
-  createTransaction: (transactionDate, categoryName) => {
-    const transactionFormData = get().transactionFormData
+  createTransaction: async (transactionDate, categoryName) => {
+    const { transactionFormData } = get()
     if (transactionDate === undefined) {
       set((state) => ({
         ...state,
@@ -120,8 +135,7 @@ const useTransactionStore = create<TransactionStore>((set, get) => ({
         },
       }))
     }
-    addTransaction({
-      id: uuid(),
+    await createTransaction({
       transactionMethod: transactionFormData.transactionMethod,
       amount: transactionFormData.amount,
       category: categoryName ?? "",
@@ -132,13 +146,13 @@ const useTransactionStore = create<TransactionStore>((set, get) => ({
     })
     switch (transactionFormData.transactionMethod) {
       case "income": {
-        const accounts = getAccounts()
+        const accounts = await getAllAccounts()
         const existingAccountIndex = accounts.findIndex(
           (account) => account.name === transactionFormData.fromAccount
         )
         if (existingAccountIndex !== -1) {
           accounts[existingAccountIndex].amount += transactionFormData.amount
-          setAccounts(accounts)
+          await setAccounts(accounts)
           set((state) => ({
             ...state,
             transactionMode: false,
@@ -149,44 +163,29 @@ const useTransactionStore = create<TransactionStore>((set, get) => ({
         break
       }
       case "expense": {
-        const accounts = getAccounts()
+        const accounts = await getAllAccounts()
         const existingAccountIndex = accounts.findIndex(
           (account) => account.name === transactionFormData.fromAccount
         )
         if (existingAccountIndex !== -1) {
           accounts[existingAccountIndex].amount -= transactionFormData.amount
-          setAccounts(accounts)
+          await setAccounts(accounts)
         } else {
           get().setError("Account does not exists")
         }
         break
       }
     }
-    set((state) => ({
-      ...state,
-      allTransactions: [...getAllTransactions()],
-    }))
+    get().getAllTransactions()
+    await useAccountStore.getState().getAllAccounts()
+    await useAccountStore.getState().getOverallBalance()
     get().escape()
   },
-  escape: () => {
-    get().closeTransactionForm()
+  getAllTransactions: async () => {
+    const allTransactions = await getAllTransactions()
     set((state) => ({
       ...state,
-      transactionFormData: {
-        transactionMethod: null,
-        fromAccount: "",
-        toAccount: "",
-        amount: 0,
-        transactionDate: "",
-        description: "",
-        paymentReceipt: "",
-      },
-    }))
-  },
-  getAllTransactions: () => {
-    set((state) => ({
-      ...state,
-      allTransactions: getAllTransactions(),
+      allTransactions,
     }))
   },
 }))
