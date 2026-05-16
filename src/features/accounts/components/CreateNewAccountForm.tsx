@@ -63,7 +63,7 @@ const CreateNewAccountForm: React.FC = () => {
             <Switch
               id="switch-focus-mode"
               onCheckedChange={(checked) => {
-                accountStore.setShowInOverallBalance(checked)
+                accountStore.handleShowInOverallBalance(checked)
               }}
               checked={
                 accountStore.createNewAccountFormData.showInOverallBalance

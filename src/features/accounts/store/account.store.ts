@@ -1,13 +1,11 @@
 import { create } from "zustand"
 import type { Account } from "@/features/accounts/type/account"
 import type { ChangeEvent } from "react"
-import {
-  // addAccount,
-  getAccounts,
-  // isAccountAlreadyExists,
-} from "@/features/accounts/services/account.service.ts"
 import { db } from "@/database/db.ts"
-import { searchAccountsByName } from "@/features/accounts/services/account.daxie.service.ts"
+import {
+  getAllAccounts,
+  searchAccountsByName,
+} from "@/features/accounts/services/account.daxie.service.ts"
 import { toast } from "sonner"
 
 type AccountStore = {
@@ -25,10 +23,10 @@ type AccountStore = {
     event: ChangeEvent<HTMLInputElement>
   ) => void
   setError: (error?: string) => void
-  setShowInOverallBalance: (showInOverallBalance: boolean) => void
+  handleShowInOverallBalance: (showInOverallBalance: boolean) => void
   createNewAccount: () => Promise<void>
-  getAllAccounts: () => void
-  getOverallBalance: () => void
+  getAllAccounts: () => Promise<void>
+  getOverallBalance: () => Promise<void>
 }
 
 const useAccountStore = create<AccountStore>((set, get) => ({
@@ -76,7 +74,7 @@ const useAccountStore = create<AccountStore>((set, get) => ({
       },
     }))
   },
-  setShowInOverallBalance: (event) => {
+  handleShowInOverallBalance: (event) => {
     set((state) => ({
       ...state,
       createNewAccountFormData: {
@@ -116,79 +114,46 @@ const useAccountStore = create<AccountStore>((set, get) => ({
           description: "Your account has been created!",
           position: "bottom-right",
         })
+        const allAccounts = await getAllAccounts()
+        set((state) => ({
+          ...state,
+          allAccounts,
+        }))
+        await get().getOverallBalance()
       } catch (e) {
         console.log(e)
       }
     } else {
       get().setError("This account name is already in use")
     }
-
-    //   get().setError()
-    //   if (get().createNewAccountFormData.name !== "") {
-    //     if (isAccountAlreadyExists(get().createNewAccountFormData.name)) {
-    //       get().setError("This account name already exists")
-    //       return
-    //     }
-    //
-    //
-    //     const allAccounts = getAccounts()
-    //     const existingAccountIndex = allAccounts.findIndex(
-    //       (account) => account.name === get().createNewAccountFormData.name
-    //     )
-    //     if (existingAccountIndex !== -1) {
-    //       get().setError("This account is already exists")
-    //       return
-    //     }
-    //     const response = addAccount({
-    //       name: get().createNewAccountFormData.name.trim(),
-    //       amount: get().createNewAccountFormData.balance,
-    //       showInOverallBalance:
-    //         get().createNewAccountFormData.showInOverallBalance,
-    //     })
-    //     if (response) {
-    //       set((state) => ({
-    //         ...state,
-    //         isCreateNewAccountFormOpen: false,
-    //       }))
-    //       get().getAllAccounts()
-    //       toast.success("Successful", {
-    //         description: "Your account has been created!",
-    //         position: "bottom-right",
-    //       })
-    //     } else {
-    //       set((state) => ({
-    //         ...state,
-    //         errorMessage: "Something went wrong",
-    //       }))
-    //     }
-    //   } else {
-    //     get().setError('"Please fill all the information"')
-    //   }
-    //   set((state) => ({
-    //     ...state,
-    //     allAccounts: [...getAccounts()],
-    //   }))
-    //   get().getOverallBalance()
   },
-  getAllAccounts: () => {
-    const allAccounts = getAccounts()
-    set((state) => ({
-      ...state,
-      allAccounts: allAccounts,
-    }))
-  },
-  getOverallBalance: () => {
-    const accounts = getAccounts()
-    let overallBalance: number = 0
-    for (const account of accounts) {
-      if (account.showInOverallBalance) {
-        overallBalance += account.amount
-      }
+  getAllAccounts: async () => {
+    try {
+      const allAccounts = await getAllAccounts()
+      set((state) => ({
+        ...state,
+        allAccounts: allAccounts,
+      }))
+    } catch (e) {
+      console.log(e)
     }
-    set((state) => ({
-      ...state,
-      overallBalance,
-    }))
+  },
+  getOverallBalance: async () => {
+    try {
+      const accounts = await getAllAccounts()
+      let overallBalance: number = 0
+      for (const account of accounts) {
+        if (account.showInOverallBalance) {
+          overallBalance += account.amount
+        }
+      }
+      set((state) => ({
+        ...state,
+        overallBalance,
+      }))
+    } catch (error) {
+      console.log(error)
+    }
   },
 }))
 
