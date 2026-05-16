@@ -2,10 +2,12 @@ import { create } from "zustand"
 import type { Account } from "@/features/accounts/type/account"
 import type { ChangeEvent } from "react"
 import {
-  addAccount,
+  // addAccount,
   getAccounts,
-  isAccountAlreadyExists,
+  // isAccountAlreadyExists,
 } from "@/features/accounts/services/account.service.ts"
+import { db } from "@/database/db.ts"
+import { searchAccountsByName } from "@/features/accounts/services/account.daxie.service.ts"
 import { toast } from "sonner"
 
 type AccountStore = {
@@ -24,7 +26,7 @@ type AccountStore = {
   ) => void
   setError: (error?: string) => void
   setShowInOverallBalance: (showInOverallBalance: boolean) => void
-  createNewAccount: () => void
+  createNewAccount: () => Promise<void>
   getAllAccounts: () => void
   getOverallBalance: () => void
 }
@@ -89,51 +91,84 @@ const useAccountStore = create<AccountStore>((set, get) => ({
       errorMessage: error ?? null,
     }))
   },
-  createNewAccount: () => {
+  createNewAccount: async () => {
     get().setError()
-    if (get().createNewAccountFormData.name !== "") {
-      if (isAccountAlreadyExists(get().createNewAccountFormData.name)) {
-        get().setError("This account name already exists")
-        return
-      }
-      const allAccounts = getAccounts()
-      const existingAccountIndex = allAccounts.findIndex(
-        (account) => account.name === get().createNewAccountFormData.name
-      )
-      if (existingAccountIndex !== -1) {
-        get().setError("This account is already exists")
-        return
-      }
-      const response = addAccount({
-        name: get().createNewAccountFormData.name.trim(),
-        amount: get().createNewAccountFormData.balance,
-        showInOverallBalance:
-          get().createNewAccountFormData.showInOverallBalance,
-      })
-      if (response) {
+    if (get().createNewAccountFormData.name.trim() === "") {
+      get().setError("Please enter a name.")
+      return
+    }
+    const alreadyExistingAccount = await searchAccountsByName(
+      get().createNewAccountFormData.name.trim()
+    )
+    if (!alreadyExistingAccount) {
+      try {
+        await db.accounts.add({
+          name: get().createNewAccountFormData.name.trim(),
+          amount: get().createNewAccountFormData.balance,
+          showInOverallBalance:
+            get().createNewAccountFormData.showInOverallBalance,
+        })
         set((state) => ({
           ...state,
           isCreateNewAccountFormOpen: false,
         }))
-        get().getAllAccounts()
         toast.success("Successful", {
           description: "Your account has been created!",
           position: "bottom-right",
         })
-      } else {
-        set((state) => ({
-          ...state,
-          errorMessage: "Something went wrong",
-        }))
+      } catch (e) {
+        console.log(e)
       }
     } else {
-      get().setError('"Please fill all the information"')
+      get().setError("This account name is already in use")
     }
-    set((state) => ({
-      ...state,
-      allAccounts: [...getAccounts()],
-    }))
-    get().getOverallBalance()
+
+    //   get().setError()
+    //   if (get().createNewAccountFormData.name !== "") {
+    //     if (isAccountAlreadyExists(get().createNewAccountFormData.name)) {
+    //       get().setError("This account name already exists")
+    //       return
+    //     }
+    //
+    //
+    //     const allAccounts = getAccounts()
+    //     const existingAccountIndex = allAccounts.findIndex(
+    //       (account) => account.name === get().createNewAccountFormData.name
+    //     )
+    //     if (existingAccountIndex !== -1) {
+    //       get().setError("This account is already exists")
+    //       return
+    //     }
+    //     const response = addAccount({
+    //       name: get().createNewAccountFormData.name.trim(),
+    //       amount: get().createNewAccountFormData.balance,
+    //       showInOverallBalance:
+    //         get().createNewAccountFormData.showInOverallBalance,
+    //     })
+    //     if (response) {
+    //       set((state) => ({
+    //         ...state,
+    //         isCreateNewAccountFormOpen: false,
+    //       }))
+    //       get().getAllAccounts()
+    //       toast.success("Successful", {
+    //         description: "Your account has been created!",
+    //         position: "bottom-right",
+    //       })
+    //     } else {
+    //       set((state) => ({
+    //         ...state,
+    //         errorMessage: "Something went wrong",
+    //       }))
+    //     }
+    //   } else {
+    //     get().setError('"Please fill all the information"')
+    //   }
+    //   set((state) => ({
+    //     ...state,
+    //     allAccounts: [...getAccounts()],
+    //   }))
+    //   get().getOverallBalance()
   },
   getAllAccounts: () => {
     const allAccounts = getAccounts()
