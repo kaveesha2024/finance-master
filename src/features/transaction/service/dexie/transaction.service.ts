@@ -5,5 +5,13 @@ export const getAllTransactions = async () => {
   return db.transactions.toCollection().reverse().toArray()
 }
 export const createTransaction = async (transaction: Transaction) => {
-  await db.transactions.add(transaction)
+  await db.transactions.add({
+    amount: transaction.amount,
+    category: transaction.category,
+    comment: transaction.comment,
+    fromAccount: transaction.fromAccount,
+    toAccount: transaction.toAccount,
+    transactionFee: transaction.transactionFee,
+    transactionMethod: transaction.transactionMethod,
+  })
 }

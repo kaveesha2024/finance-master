@@ -125,7 +125,7 @@ const useTransactionStore = create<TransactionStore>((set, get) => ({
     }))
   },
   createTransaction: async (transactionDate, categoryName) => {
-    const { transactionFormData } = get()
+    const { transactionFormData, setError } = get()
     if (transactionDate === undefined) {
       set((state) => ({
         ...state,
@@ -135,6 +135,32 @@ const useTransactionStore = create<TransactionStore>((set, get) => ({
         },
       }))
     }
+
+    // if (transactionFormData.transactionMethod === "income") {
+    //   if (transactionFormData.fromAccount === "") {
+    //     setError("Select the account to create the transaction INCOME")
+    //     return
+    //   }
+    // } else if (transactionFormData.transactionMethod === "expense") {
+    //   if (transactionFormData.fromAccount === "") {
+    //     setError("Select the account to create the transaction EXPENSE")
+    //     return
+    //   }
+    // } else {
+    //   if (
+    //     transactionFormData.fromAccount === "" ||
+    //     transactionFormData.toAccount === ""
+    //   ) {
+    //     setError("Select the accounts to create the transaction TRANSFER")
+    //     return
+    //   }
+    // }
+
+    if (transactionFormData.fromAccount === "") {
+      setError("Select the account to create the transaction.")
+      return
+    }
+
     await createTransaction({
       transactionMethod: transactionFormData.transactionMethod,
       amount: transactionFormData.amount,
@@ -175,6 +201,8 @@ const useTransactionStore = create<TransactionStore>((set, get) => ({
         }
         break
       }
+      default:
+        break
     }
     get().getAllTransactions()
     await useAccountStore.getState().getAllAccounts()

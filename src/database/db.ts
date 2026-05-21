@@ -10,7 +10,7 @@ export const db = new Dexie("finance-master-database") as Dexie & {
 db.version(1).stores({
   accounts: "++id, name, showInOverallBalance, amount",
   transactions:
-    "id, category, amount, comment, transactionMethod, fromAccount, toAccount, transactionFee",
+    "++id, category, amount, comment, transactionMethod, fromAccount, toAccount, transactionFee",
 })
 
 export default { db }

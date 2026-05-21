@@ -41,7 +41,7 @@ const TransactionForm: React.FC = () => {
   return (
     <div className={"fixed top-0 left-0 h-full w-full backdrop-blur-2xl"}>
       <div className={"flex h-full w-full items-center justify-center"}>
-        <div className={"w-[500px] bg-background p-5"}>
+        <div className={"w-125 bg-background p-5"}>
           {transactionStore.transactionFormData.transactionMethod !== null ? (
             <FieldGroup>
               <FieldSet>
@@ -53,6 +53,11 @@ const TransactionForm: React.FC = () => {
                 <FieldDescription>
                   All transactions are secured
                 </FieldDescription>
+                {transactionStore.errorMessage && (
+                  <div className={"text-sm text-destructive"}>
+                    {transactionStore.errorMessage}
+                  </div>
+                )}
                 <FieldGroup>
                   <Field>
                     <FieldLabel htmlFor="amount">Transaction amount</FieldLabel>
