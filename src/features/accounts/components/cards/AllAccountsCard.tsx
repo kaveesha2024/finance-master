@@ -1,21 +1,37 @@
 import React from "react"
 import { HiWallet } from "react-icons/hi2"
+import { Button } from "@/components/ui/button.tsx"
 
-const AllAccountsCard: React.FC = () => {
+type AllAccountsCardProps = {
+  amount: number
+}
+const AllAccountsCard: React.FC<AllAccountsCardProps> = ({ amount }) => {
   return (
     <div
       className={
-        "flex h-[55px] w-[400px] items-center gap-3 rounded-lg border border-border bg-background p-3"
+        "flex h-13.75 w-100 items-center gap-3 rounded-lg border border-border bg-background p-3"
       }
     >
       <div
         className={
-          "flex h-[35px] w-[35px] items-center justify-center rounded-lg border border-border bg-primary"
+          "flex h-8.75 w-8.75 items-center justify-center rounded-lg border border-border bg-primary"
         }
       >
         <HiWallet className={"text-[18px] text-white"} />{" "}
       </div>
-      <p className={"font-medium"}>3 Accounts</p>
+      <p className={"font-medium"}>
+        {amount <= 0 ? (
+          <span>
+            Try to
+            <Button className={"ml-"} variant={"link"}>
+              Create
+            </Button>
+            new account
+          </span>
+        ) : (
+          `${amount} Accounts`
+        )}{" "}
+      </p>
     </div>
   )
 }
