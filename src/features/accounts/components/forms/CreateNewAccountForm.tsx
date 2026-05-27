@@ -1,15 +1,15 @@
 import React from "react"
-import Header from "@/components/ui/header.tsx"
+import Header from "src/components/ui/header.tsx"
 import {
   Field,
   FieldContent,
   FieldDescription,
   FieldLabel,
-} from "@/components/ui/field.tsx"
-import { Input } from "@/components/ui/input.tsx"
-import { Button } from "@/components/ui/button.tsx"
-import useAccountStore from "@/features/accounts/store/account.store.ts"
-import { Switch } from "@/components/ui/switch"
+} from "src/components/ui/field.tsx"
+import { Input } from "src/components/ui/input.tsx"
+import { Button } from "src/components/ui/button.tsx"
+import useAccountStore from "src/features/accounts/store/account.store.ts"
+import { Switch } from "src/components/ui/switch"
 
 const CreateNewAccountForm: React.FC = () => {
   const accountStore = useAccountStore()

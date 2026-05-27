@@ -1,12 +1,12 @@
 import React, { useEffect } from "react"
-import AccountCard from "@/features/accounts/components/AccountCard.tsx"
+import AccountCard from "../../features/accounts/components/cards/AccountCard.tsx"
 import useAccountStore from "@/features/accounts/store/account.store.ts"
 import useTransactionStore from "@/features/transaction/store/transaction.store.ts"
 import useCategoryStore from "@/features/category/store/category.store.ts"
-import CreateNewAccountForm from "@/features/accounts/components/CreateNewAccountForm.tsx"
+import CreateNewAccountForm from "../../features/accounts/components/forms/CreateNewAccountForm.tsx"
 import TransactionForm from "@/features/transaction/components/TransactionForm.tsx"
 import ChooseCategoryForm from "@/features/category/components/ChooseCategoryForm.tsx"
-import AllAccountsBalanceCard from "@/features/accounts/components/AllAccountsBalanceCard.tsx"
+import AllAccountsBalanceCard from "../../features/accounts/components/cards/AllAccountsBalanceCard.tsx"
 import RecentTransactionTile from "@/features/transaction/components/RecentTransactionTile.tsx"
 
 const Home: React.FC = () => {
