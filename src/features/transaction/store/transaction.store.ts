@@ -20,7 +20,7 @@ export type TransactionStore = {
     fromAccount: string
     toAccount: string
     amount: number
-    transactionDate: string
+    transactionDate: Date
     description: string
     paymentReceipt: string
   }
@@ -50,7 +50,7 @@ const useTransactionStore = create<TransactionStore>((set, get) => ({
     fromAccount: "",
     toAccount: "",
     amount: 0,
-    transactionDate: "",
+    transactionDate: new Date(),
     description: "",
     paymentReceipt: "",
   },
@@ -72,7 +72,7 @@ const useTransactionStore = create<TransactionStore>((set, get) => ({
         fromAccount: "",
         toAccount: "",
         amount: 0,
-        transactionDate: "",
+        transactionDate: new Date(),
         description: "",
         paymentReceipt: "",
       },
@@ -125,17 +125,24 @@ const useTransactionStore = create<TransactionStore>((set, get) => ({
     }))
   },
   createTransaction: async (transactionDate, categoryName) => {
-    const { transactionFormData, setError } = get()
     if (transactionDate === undefined) {
+      console.log("transaction undefined")
       set((state) => ({
         ...state,
         transactionFormData: {
           ...state.transactionFormData,
-          transactionDate: Date(),
+          transactionDate: new Date(),
+        },
+      }))
+    } else {
+      set((state) => ({
+        ...state,
+        transactionFormData: {
+          ...state.transactionFormData,
+          transactionDate: transactionDate,
         },
       }))
     }
-
     // if (transactionFormData.transactionMethod === "income") {
     //   if (transactionFormData.fromAccount === "") {
     //     setError("Select the account to create the transaction INCOME")
@@ -156,6 +163,8 @@ const useTransactionStore = create<TransactionStore>((set, get) => ({
     //   }
     // }
 
+    const { transactionFormData, setError } = get()
+
     if (transactionFormData.fromAccount === "") {
       setError("Select the account to create the transaction.")
       return
@@ -169,6 +178,7 @@ const useTransactionStore = create<TransactionStore>((set, get) => ({
       toAccount: transactionFormData.toAccount,
       transactionFee: 0,
       comment: transactionFormData.description,
+      transactionDate: transactionFormData.transactionDate,
     })
     switch (transactionFormData.transactionMethod) {
       case "income": {

@@ -13,5 +13,6 @@ export const createTransaction = async (transaction: Transaction) => {
     toAccount: transaction.toAccount,
     transactionFee: transaction.transactionFee,
     transactionMethod: transaction.transactionMethod,
+    transactionDate: transaction.transactionDate,
   })
 }

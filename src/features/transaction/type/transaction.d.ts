@@ -9,4 +9,5 @@ export type Transaction = {
   fromAccount: string
   toAccount: string
   transactionFee: number
+  transactionDate: Date
 }

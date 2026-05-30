@@ -1,7 +1,17 @@
-import React from "react"
+import React, { useEffect } from "react"
+import AllTransactionsTable from "@/features/transaction/components/tables/AllTransactionsTable.tsx"
+import useTransactionStore from "@/features/transaction/store/transaction.store.ts"
 
 const TransactionPage: React.FC = () => {
-  return <div>Transaction Page</div>
+  const transactionStore = useTransactionStore()
+  useEffect(() => {
+    transactionStore.getAllTransactions()
+  }, [])
+  return (
+    <div>
+      <AllTransactionsTable />
+    </div>
+  )
 }
 
 export default TransactionPage
