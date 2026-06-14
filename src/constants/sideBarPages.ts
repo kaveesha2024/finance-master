@@ -14,7 +14,7 @@ export const sideBarPages: { name: string; path: string; icon: IconType }[] = [
   },
   {
     name: "Accounts",
-    path: "/all_accounts",
+    path: "/accounts",
     icon: HiWallet,
   },
   /* {
