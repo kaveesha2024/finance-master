@@ -1,6 +1,7 @@
 import {
   HiHome,
   HiMiniArrowsRightLeft,
+  HiMiniBuildingLibrary,
   // HiMiniBuildingLibrary,
   HiWallet,
 } from "react-icons/hi2"
@@ -17,14 +18,15 @@ export const sideBarPages: { name: string; path: string; icon: IconType }[] = [
     path: "/accounts",
     icon: HiWallet,
   },
-  /* {
-    name: "Loans",
-    path: "/loans",
-    icon: HiMiniBuildingLibrary,
-  },*/
   {
     name: "Transactions",
     path: "/transactions",
     icon: HiMiniArrowsRightLeft,
+  },
+
+  {
+    name: "Loans",
+    path: "/loans",
+    icon: HiMiniBuildingLibrary,
   },
 ]
