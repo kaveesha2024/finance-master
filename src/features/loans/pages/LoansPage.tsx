@@ -27,12 +27,12 @@ const LoansPage: React.FC = () => {
   ];
 
   return (
-    <div className="p-6 space-y-6 w-full">
+    <div className="p- space-y-6 w-full">
       {/* Header Section */}
       <div className="flex justify-between items-center">
         <div>
           <p className="text-sm text-gray-500 font-medium">Total Outstanding Loans</p>
-          <h1 className="text-2xl font-bold text-red-600">Rs 45,000</h1>
+          <h1 className="text-2xl font-bold text-destructive">Rs 45,000</h1>
         </div>
         <button className="flex items-center gap-2 bg-[#007A87] text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-[#00626c] transition-all">
           <Plus size={16} /> Add New Loan

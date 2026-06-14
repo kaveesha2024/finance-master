@@ -18,7 +18,7 @@ const AppLayout: React.FC = () => {
       <AppSidebar />
       <div className="col-span-5 h-full w-full bg-muted">
         <AppHeader overallBalance={accountStore.overallBalance} />
-        <div className="h-[calc(100vh-80px)] w-full overflow-auto p-3">
+        <div className="h-[calc(100vh-80px)] w-full overflow-auto p-5">
           <Outlet />
         </div>
       </div>
